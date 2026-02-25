@@ -1,0 +1,11 @@
+C:\Users\user\source\repos\TFLC_GUI\bin\Release\Resources\Create.png
+C:\Users\user\source\repos\TFLC_GUI\bin\Release\TFLC_GUI.exe.config
+C:\Users\user\source\repos\TFLC_GUI\bin\Release\TFLC_GUI.exe
+C:\Users\user\source\repos\TFLC_GUI\bin\Release\TFLC_GUI.pdb
+C:\Users\user\source\repos\TFLC_GUI\obj\Release\TFLC_GUI.csproj.AssemblyReference.cache
+C:\Users\user\source\repos\TFLC_GUI\obj\Release\TFLC_GUI.Form1.resources
+C:\Users\user\source\repos\TFLC_GUI\obj\Release\TFLC_GUI.Properties.Resources.resources
+C:\Users\user\source\repos\TFLC_GUI\obj\Release\TFLC_GUI.csproj.GenerateResource.cache
+C:\Users\user\source\repos\TFLC_GUI\obj\Release\TFLC_GUI.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\TFLC_GUI\obj\Release\TFLC_GUI.exe
+C:\Users\user\source\repos\TFLC_GUI\obj\Release\TFLC_GUI.pdb
