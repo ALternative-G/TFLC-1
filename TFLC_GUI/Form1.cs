@@ -621,6 +621,10 @@ namespace TFLC_GUI
             ruEnDictionary.Add("Статус", "Status");
             ruEnDictionary.Add("Файл", "File");
             ruEnDictionary.Add("Изменен", "Modified");
+
+            ruEnDictionary.Add("Позиция", "Position");
+            ruEnDictionary.Add("Код", "Code");
+            ruEnDictionary.Add("Ошибка", "Error");
         }
 
         private void localrusToolStripMenuItem_Click(object sender, EventArgs e)
@@ -685,11 +689,20 @@ namespace TFLC_GUI
             tabPageParcer.Text = GetTranslation("Парсер");
             tabPageOptimisation.Text = GetTranslation("Оптимизация");
 
-            FileColumn.HeaderText = GetTranslation("Файл");
-            ColumPos.HeaderText = GetTranslation("Позиция");
-            ColumnCode.HeaderText = GetTranslation("Код");
-            ColumnError.HeaderText = GetTranslation("Ошибка");
+            ColumnFile1.HeaderText = GetTranslation("Файл");
+            ColumnPos1.HeaderText = GetTranslation("Позиция");
+            ColumnCode1.HeaderText = GetTranslation("Код");
+            ColumnError1.HeaderText = GetTranslation("Ошибка");
 
+            ColumnFile2.HeaderText = GetTranslation("Файл");
+            ColumnPos2.HeaderText = GetTranslation("Позиция");
+            ColumnCode2.HeaderText = GetTranslation("Код");
+            ColumnError2.HeaderText = GetTranslation("Ошибка");
+
+            ColumnFile3.HeaderText = GetTranslation("Файл");
+            ColumnPos3.HeaderText = GetTranslation("Позиция");
+            ColumnCode3.HeaderText = GetTranslation("Код");
+            ColumnError3.HeaderText = GetTranslation("Ошибка");
 
             foreach (var tabInfo in fileTabs.Values)
             {
