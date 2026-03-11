@@ -55,6 +55,10 @@
             this.decreaseFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resetFontToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.ColumnFile1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPos1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCode1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnError1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip2 = new System.Windows.Forms.MenuStrip();
             this.newStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -70,31 +74,33 @@
             this.statuslabel = new System.Windows.Forms.Label();
             this.tabControlErrors = new System.Windows.Forms.TabControl();
             this.tabPageScanner = new System.Windows.Forms.TabPage();
+            this.dataGridView4 = new System.Windows.Forms.DataGridView();
+            this.LexCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LexType = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LexString = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.LexPos = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageParcer = new System.Windows.Forms.TabPage();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.tabPageOptimisation = new System.Windows.Forms.TabPage();
-            this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
-            this.richTextBox_scroll1 = new System.Windows.Forms.RichTextBox();
-            this.tabControlFile = new System.Windows.Forms.TabControl();
-            this.ColumnFile1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnPos1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCode1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnError1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnFile2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnPos2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnCode2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnError2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPageOptimisation = new System.Windows.Forms.TabPage();
+            this.dataGridView3 = new System.Windows.Forms.DataGridView();
             this.ColumnFile3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnPos3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnCode3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnError3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.richTextBox_scroll1 = new System.Windows.Forms.RichTextBox();
+            this.tabControlFile = new System.Windows.Forms.TabControl();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip2.SuspendLayout();
             this.tabControlErrors.SuspendLayout();
             this.tabPageScanner.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).BeginInit();
             this.tabPageParcer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.tabPageOptimisation.SuspendLayout();
@@ -117,7 +123,7 @@
             this.viewToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2212, 40);
+            this.menuStrip1.Size = new System.Drawing.Size(2263, 40);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -310,6 +316,7 @@
             this.launchToolStripMenuItem.Name = "launchToolStripMenuItem";
             this.launchToolStripMenuItem.Size = new System.Drawing.Size(86, 36);
             this.launchToolStripMenuItem.Text = "Пуск";
+            this.launchToolStripMenuItem.Click += new System.EventHandler(this.launchStripMenuItem_Click);
             // 
             // infoToolStripMenuItem
             // 
@@ -392,20 +399,54 @@
             // 
             this.dataGridView1.AllowUserToAddRows = false;
             this.dataGridView1.AllowUserToDeleteRows = false;
+            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnFile1,
             this.ColumnPos1,
             this.ColumnCode1,
             this.ColumnError1});
-            this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView1.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView1.Location = new System.Drawing.Point(1187, 3);
             this.dataGridView1.Margin = new System.Windows.Forms.Padding(6);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 82;
-            this.dataGridView1.Size = new System.Drawing.Size(2190, 329);
+            this.dataGridView1.Size = new System.Drawing.Size(1057, 329);
             this.dataGridView1.TabIndex = 1;
+            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
+            // 
+            // ColumnFile1
+            // 
+            this.ColumnFile1.HeaderText = "Файл";
+            this.ColumnFile1.MinimumWidth = 10;
+            this.ColumnFile1.Name = "ColumnFile1";
+            this.ColumnFile1.ReadOnly = true;
+            this.ColumnFile1.Width = 111;
+            // 
+            // ColumnPos1
+            // 
+            this.ColumnPos1.HeaderText = "Позиция";
+            this.ColumnPos1.MinimumWidth = 10;
+            this.ColumnPos1.Name = "ColumnPos1";
+            this.ColumnPos1.ReadOnly = true;
+            this.ColumnPos1.Width = 142;
+            // 
+            // ColumnCode1
+            // 
+            this.ColumnCode1.HeaderText = "Код";
+            this.ColumnCode1.MinimumWidth = 10;
+            this.ColumnCode1.Name = "ColumnCode1";
+            this.ColumnCode1.ReadOnly = true;
+            this.ColumnCode1.Width = 95;
+            // 
+            // ColumnError1
+            // 
+            this.ColumnError1.HeaderText = "Ошибка";
+            this.ColumnError1.MinimumWidth = 10;
+            this.ColumnError1.Name = "ColumnError1";
+            this.ColumnError1.ReadOnly = true;
+            this.ColumnError1.Width = 137;
             // 
             // menuStrip2
             // 
@@ -425,7 +466,7 @@
             this.infoStripMenuItem});
             this.menuStrip2.Location = new System.Drawing.Point(0, 40);
             this.menuStrip2.Name = "menuStrip2";
-            this.menuStrip2.Size = new System.Drawing.Size(2212, 58);
+            this.menuStrip2.Size = new System.Drawing.Size(2263, 58);
             this.menuStrip2.TabIndex = 2;
             this.menuStrip2.Text = "menuStrip2";
             // 
@@ -522,22 +563,76 @@
             this.tabControlErrors.Controls.Add(this.tabPageParcer);
             this.tabControlErrors.Controls.Add(this.tabPageOptimisation);
             this.tabControlErrors.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tabControlErrors.Location = new System.Drawing.Point(0, 671);
+            this.tabControlErrors.Location = new System.Drawing.Point(0, 633);
             this.tabControlErrors.Name = "tabControlErrors";
             this.tabControlErrors.SelectedIndex = 0;
-            this.tabControlErrors.Size = new System.Drawing.Size(2212, 382);
+            this.tabControlErrors.Size = new System.Drawing.Size(2263, 382);
             this.tabControlErrors.TabIndex = 6;
             // 
             // tabPageScanner
             // 
+            this.tabPageScanner.Controls.Add(this.dataGridView4);
             this.tabPageScanner.Controls.Add(this.dataGridView1);
             this.tabPageScanner.Location = new System.Drawing.Point(8, 39);
             this.tabPageScanner.Name = "tabPageScanner";
             this.tabPageScanner.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageScanner.Size = new System.Drawing.Size(2196, 335);
+            this.tabPageScanner.Size = new System.Drawing.Size(2247, 335);
             this.tabPageScanner.TabIndex = 0;
             this.tabPageScanner.Text = "Сканер";
             this.tabPageScanner.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView4
+            // 
+            this.dataGridView4.AllowUserToAddRows = false;
+            this.dataGridView4.AllowUserToDeleteRows = false;
+            this.dataGridView4.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCells;
+            this.dataGridView4.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView4.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.LexCode,
+            this.LexType,
+            this.LexString,
+            this.LexPos});
+            this.dataGridView4.Dock = System.Windows.Forms.DockStyle.Left;
+            this.dataGridView4.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView4.Name = "dataGridView4";
+            this.dataGridView4.ReadOnly = true;
+            this.dataGridView4.RowHeadersWidth = 82;
+            this.dataGridView4.RowTemplate.Height = 33;
+            this.dataGridView4.Size = new System.Drawing.Size(952, 329);
+            this.dataGridView4.TabIndex = 2;
+            this.dataGridView4.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView4_CellContentClick);
+            // 
+            // LexCode
+            // 
+            this.LexCode.HeaderText = "Условный код";
+            this.LexCode.MinimumWidth = 10;
+            this.LexCode.Name = "LexCode";
+            this.LexCode.ReadOnly = true;
+            this.LexCode.Width = 180;
+            // 
+            // LexType
+            // 
+            this.LexType.HeaderText = "Тип лексемы";
+            this.LexType.MinimumWidth = 10;
+            this.LexType.Name = "LexType";
+            this.LexType.ReadOnly = true;
+            this.LexType.Width = 173;
+            // 
+            // LexString
+            // 
+            this.LexString.HeaderText = "Лексема";
+            this.LexString.MinimumWidth = 10;
+            this.LexString.Name = "LexString";
+            this.LexString.ReadOnly = true;
+            this.LexString.Width = 145;
+            // 
+            // LexPos
+            // 
+            this.LexPos.HeaderText = "Местоположение";
+            this.LexPos.MinimumWidth = 10;
+            this.LexPos.Name = "LexPos";
+            this.LexPos.ReadOnly = true;
+            this.LexPos.Width = 231;
             // 
             // tabPageParcer
             // 
@@ -545,7 +640,7 @@
             this.tabPageParcer.Location = new System.Drawing.Point(8, 39);
             this.tabPageParcer.Name = "tabPageParcer";
             this.tabPageParcer.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageParcer.Size = new System.Drawing.Size(2196, 335);
+            this.tabPageParcer.Size = new System.Drawing.Size(2247, 335);
             this.tabPageParcer.TabIndex = 1;
             this.tabPageParcer.Text = "Парсер";
             this.tabPageParcer.UseVisualStyleBackColor = true;
@@ -566,116 +661,8 @@
             this.dataGridView2.Name = "dataGridView2";
             this.dataGridView2.ReadOnly = true;
             this.dataGridView2.RowHeadersWidth = 82;
-            this.dataGridView2.Size = new System.Drawing.Size(2190, 329);
+            this.dataGridView2.Size = new System.Drawing.Size(2241, 329);
             this.dataGridView2.TabIndex = 2;
-            // 
-            // tabPageOptimisation
-            // 
-            this.tabPageOptimisation.Controls.Add(this.dataGridView3);
-            this.tabPageOptimisation.Location = new System.Drawing.Point(8, 39);
-            this.tabPageOptimisation.Name = "tabPageOptimisation";
-            this.tabPageOptimisation.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageOptimisation.Size = new System.Drawing.Size(2196, 335);
-            this.tabPageOptimisation.TabIndex = 2;
-            this.tabPageOptimisation.Text = "Оптимизация";
-            this.tabPageOptimisation.UseVisualStyleBackColor = true;
-            // 
-            // dataGridView3
-            // 
-            this.dataGridView3.AllowUserToAddRows = false;
-            this.dataGridView3.AllowUserToDeleteRows = false;
-            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.ColumnFile3,
-            this.ColumnPos3,
-            this.ColumnCode3,
-            this.ColumnError3});
-            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dataGridView3.Location = new System.Drawing.Point(3, 3);
-            this.dataGridView3.Margin = new System.Windows.Forms.Padding(6);
-            this.dataGridView3.Name = "dataGridView3";
-            this.dataGridView3.ReadOnly = true;
-            this.dataGridView3.RowHeadersWidth = 82;
-            this.dataGridView3.Size = new System.Drawing.Size(2190, 329);
-            this.dataGridView3.TabIndex = 2;
-            // 
-            // tabPage1
-            // 
-            this.tabPage1.Controls.Add(this.richTextBox1);
-            this.tabPage1.Controls.Add(this.richTextBox_scroll1);
-            this.tabPage1.Location = new System.Drawing.Point(8, 39);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(2196, 447);
-            this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Файл 1";
-            this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // richTextBox1
-            // 
-            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.richTextBox1.Location = new System.Drawing.Point(83, 3);
-            this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(2110, 441);
-            this.richTextBox1.TabIndex = 1;
-            this.richTextBox1.Text = "";
-            this.richTextBox1.SelectionChanged += new System.EventHandler(this.RichTextBox_SelectionChanged);
-            this.richTextBox1.VScroll += new System.EventHandler(this.RichTextBox_VScroll);
-            this.richTextBox1.TextChanged += new System.EventHandler(this.RichTextBox_TextChanged);
-            // 
-            // richTextBox_scroll1
-            // 
-            this.richTextBox_scroll1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.richTextBox_scroll1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.richTextBox_scroll1.Location = new System.Drawing.Point(3, 3);
-            this.richTextBox_scroll1.Name = "richTextBox_scroll1";
-            this.richTextBox_scroll1.ReadOnly = true;
-            this.richTextBox_scroll1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.richTextBox_scroll1.Size = new System.Drawing.Size(80, 441);
-            this.richTextBox_scroll1.TabIndex = 0;
-            this.richTextBox_scroll1.Text = "";
-            // 
-            // tabControlFile
-            // 
-            this.tabControlFile.Controls.Add(this.tabPage1);
-            this.tabControlFile.Dock = System.Windows.Forms.DockStyle.Top;
-            this.tabControlFile.Location = new System.Drawing.Point(0, 123);
-            this.tabControlFile.Name = "tabControlFile";
-            this.tabControlFile.SelectedIndex = 0;
-            this.tabControlFile.Size = new System.Drawing.Size(2212, 494);
-            this.tabControlFile.TabIndex = 5;
-            // 
-            // ColumnFile1
-            // 
-            this.ColumnFile1.HeaderText = "Файл";
-            this.ColumnFile1.MinimumWidth = 10;
-            this.ColumnFile1.Name = "ColumnFile1";
-            this.ColumnFile1.ReadOnly = true;
-            this.ColumnFile1.Width = 200;
-            // 
-            // ColumnPos1
-            // 
-            this.ColumnPos1.HeaderText = "Позиция";
-            this.ColumnPos1.MinimumWidth = 10;
-            this.ColumnPos1.Name = "ColumnPos1";
-            this.ColumnPos1.ReadOnly = true;
-            this.ColumnPos1.Width = 200;
-            // 
-            // ColumnCode1
-            // 
-            this.ColumnCode1.HeaderText = "Код";
-            this.ColumnCode1.MinimumWidth = 10;
-            this.ColumnCode1.Name = "ColumnCode1";
-            this.ColumnCode1.ReadOnly = true;
-            this.ColumnCode1.Width = 200;
-            // 
-            // ColumnError1
-            // 
-            this.ColumnError1.HeaderText = "Ошибка";
-            this.ColumnError1.MinimumWidth = 10;
-            this.ColumnError1.Name = "ColumnError1";
-            this.ColumnError1.ReadOnly = true;
-            this.ColumnError1.Width = 700;
             // 
             // ColumnFile2
             // 
@@ -709,6 +696,36 @@
             this.ColumnError2.ReadOnly = true;
             this.ColumnError2.Width = 700;
             // 
+            // tabPageOptimisation
+            // 
+            this.tabPageOptimisation.Controls.Add(this.dataGridView3);
+            this.tabPageOptimisation.Location = new System.Drawing.Point(8, 39);
+            this.tabPageOptimisation.Name = "tabPageOptimisation";
+            this.tabPageOptimisation.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageOptimisation.Size = new System.Drawing.Size(2247, 335);
+            this.tabPageOptimisation.TabIndex = 2;
+            this.tabPageOptimisation.Text = "Оптимизация";
+            this.tabPageOptimisation.UseVisualStyleBackColor = true;
+            // 
+            // dataGridView3
+            // 
+            this.dataGridView3.AllowUserToAddRows = false;
+            this.dataGridView3.AllowUserToDeleteRows = false;
+            this.dataGridView3.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView3.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ColumnFile3,
+            this.ColumnPos3,
+            this.ColumnCode3,
+            this.ColumnError3});
+            this.dataGridView3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dataGridView3.Location = new System.Drawing.Point(3, 3);
+            this.dataGridView3.Margin = new System.Windows.Forms.Padding(6);
+            this.dataGridView3.Name = "dataGridView3";
+            this.dataGridView3.ReadOnly = true;
+            this.dataGridView3.RowHeadersWidth = 82;
+            this.dataGridView3.Size = new System.Drawing.Size(2241, 329);
+            this.dataGridView3.TabIndex = 2;
+            // 
             // ColumnFile3
             // 
             this.ColumnFile3.HeaderText = "Файл";
@@ -741,11 +758,57 @@
             this.ColumnError3.ReadOnly = true;
             this.ColumnError3.Width = 700;
             // 
+            // tabPage1
+            // 
+            this.tabPage1.Controls.Add(this.richTextBox1);
+            this.tabPage1.Controls.Add(this.richTextBox_scroll1);
+            this.tabPage1.Location = new System.Drawing.Point(8, 39);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(2247, 447);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Файл 1";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.richTextBox1.Location = new System.Drawing.Point(83, 3);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(2161, 441);
+            this.richTextBox1.TabIndex = 1;
+            this.richTextBox1.Text = "";
+            this.richTextBox1.SelectionChanged += new System.EventHandler(this.RichTextBox_SelectionChanged);
+            this.richTextBox1.VScroll += new System.EventHandler(this.RichTextBox_VScroll);
+            this.richTextBox1.TextChanged += new System.EventHandler(this.RichTextBox_TextChanged);
+            // 
+            // richTextBox_scroll1
+            // 
+            this.richTextBox_scroll1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.richTextBox_scroll1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.richTextBox_scroll1.Location = new System.Drawing.Point(3, 3);
+            this.richTextBox_scroll1.Name = "richTextBox_scroll1";
+            this.richTextBox_scroll1.ReadOnly = true;
+            this.richTextBox_scroll1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
+            this.richTextBox_scroll1.Size = new System.Drawing.Size(80, 441);
+            this.richTextBox_scroll1.TabIndex = 0;
+            this.richTextBox_scroll1.Text = "";
+            // 
+            // tabControlFile
+            // 
+            this.tabControlFile.Controls.Add(this.tabPage1);
+            this.tabControlFile.Dock = System.Windows.Forms.DockStyle.Top;
+            this.tabControlFile.Location = new System.Drawing.Point(0, 123);
+            this.tabControlFile.Name = "tabControlFile";
+            this.tabControlFile.SelectedIndex = 0;
+            this.tabControlFile.Size = new System.Drawing.Size(2263, 494);
+            this.tabControlFile.TabIndex = 5;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(2212, 1053);
+            this.ClientSize = new System.Drawing.Size(2263, 1015);
             this.Controls.Add(this.tabControlErrors);
             this.Controls.Add(this.tabControlFile);
             this.Controls.Add(this.statuslabel);
@@ -763,6 +826,7 @@
             this.menuStrip2.PerformLayout();
             this.tabControlErrors.ResumeLayout(false);
             this.tabPageScanner.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView4)).EndInit();
             this.tabPageParcer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.tabPageOptimisation.ResumeLayout(false);
@@ -849,5 +913,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPos3;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCode3;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnError3;
+        private System.Windows.Forms.DataGridView dataGridView4;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LexCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LexType;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LexString;
+        private System.Windows.Forms.DataGridViewTextBoxColumn LexPos;
     }
 }

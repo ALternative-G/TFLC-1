@@ -7,8 +7,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
+using LexicalAnalyser;
+using static System.Net.Mime.MediaTypeNames;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+
 namespace TFLC_GUI
 {
+
     public partial class Form1 : Form
     {
         // Класс для хранения информации о файле на вкладке
@@ -704,6 +709,8 @@ namespace TFLC_GUI
             ColumnCode3.HeaderText = GetTranslation("Код");
             ColumnError3.HeaderText = GetTranslation("Ошибка");
 
+            newTabToolStripMenuItem.Text = GetTranslation("Новая вкладка");
+            closeTabToolStripMenuItem.Text = GetTranslation("Закрыть вкладку");
             foreach (var tabInfo in fileTabs.Values)
             {
                 tabInfo.TabPage.Text = GetFileNameForTab(tabInfo);
@@ -790,7 +797,7 @@ namespace TFLC_GUI
 
         private void ExitToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Application.Exit();
+            System.Windows.Forms.Application.Exit();
         }
 
         #endregion
@@ -1064,7 +1071,118 @@ namespace TFLC_GUI
             if (currentTabInfo != null)
             {
                 HighlightSyntax(currentTabInfo.TextBox);
+
+
+                dataGridView4.Rows.Clear();
+                dataGridView1.Rows.Clear();
+                ScannerFSM scanner = new ScannerFSM();
+                var result = scanner.Analyze(currentTabInfo.TextBox.Text);
+
+                List<Token> Tokens = result.Tokens;
+                foreach ( var item in Tokens)
+                {
+                    string[] row = item.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None);
+                    dataGridView4.Rows.Add(row);
+                }
+
+
+                List<LexicalError> LexErrors = result.Errors;
+                string filepath = currentTabInfo.FilePath;
+                if (filepath == "")
+                    filepath = "unnamed";
+
+
+                foreach (var item in LexErrors)
+                {
+                    string[] row = { filepath };
+
+                    foreach (var elem in item.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
+                        row = row.Append(elem).ToArray();
+                    
+
+                    dataGridView1.Rows.Add(row);
+                }
             }
+
+        }
+
+
+        private void SetCaretPositionRobust(int lineIndex, int characterIndex)
+        {
+            var currentTabInfo = GetCurrentTabInfo();
+            RichTextBox rtb = currentTabInfo.TextBox;
+
+            // Get the character index of the first character in the target line
+            int startOfLineIndex = rtb.GetFirstCharIndexFromLine(lineIndex);
+
+            if (startOfLineIndex != -1)
+            {
+                // Calculate the final offset
+                int offset = startOfLineIndex + characterIndex;
+
+                // Ensure the offset is valid
+                if (offset <= rtb.TextLength)
+                {
+                    rtb.SelectionStart = offset;
+                    rtb.SelectionLength = 0;
+                    rtb.ScrollToCaret();
+                    rtb.Focus();
+                }
+            }
+        }
+
+        private void dataGridView4_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!IsANonHeaderLinkCell(e))
+            {
+                DataGridViewSelectedCellCollection selected = dataGridView4.SelectedCells;
+                
+                if (selected[0].ColumnIndex == 3) {
+                    string input = selected[0].EditedFormattedValue.ToString();
+                    string pattern = @"Line (?<ln>\d+), (?<pos1>\d+)-(?<pos2>\d+)";
+
+                    Match match = Regex.Match(input, pattern);
+
+                    if (match.Success)
+                    {
+                        string line = match.Groups["ln"].Value;
+                        string pos1 = match.Groups["pos1"].Value;
+                        SetCaretPositionRobust(int.Parse(line), int.Parse(pos1));
+                    }
+                }
+            }
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!IsANonHeaderLinkCell(e))
+            {
+                DataGridViewSelectedCellCollection selected = dataGridView1.SelectedCells;
+
+                if (selected[0].ColumnIndex == 1)
+                {
+                    string input = selected[0].EditedFormattedValue.ToString();
+                    string pattern = @"Line (?<ln>\d+), pos (?<pos1>\d+)";
+
+                    Match match = Regex.Match(input, pattern);
+
+                    if (match.Success)
+                    {
+                        string line = match.Groups["ln"].Value;
+                        string pos1 = match.Groups["pos1"].Value;
+                        SetCaretPositionRobust(int.Parse(line), int.Parse(pos1));
+                    }
+                }
+            }
+        }
+
+        private bool IsANonHeaderLinkCell(DataGridViewCellEventArgs cellEvent)
+        {
+            if (dataGridView4.Columns[cellEvent.ColumnIndex] is
+                DataGridViewLinkColumn &&
+                cellEvent.RowIndex != -1)
+            { return true; }
+            else { return false; }
         }
     }
 }
