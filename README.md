@@ -128,7 +128,32 @@
 
 ---
 ## Лексический сканнер
+### Схема конечногго автомата:
 <img width="531" height="533" alt="Сканер" src="https://github.com/user-attachments/assets/e53720bf-8fa4-4365-85f8-b8a7660ad2e9" />
+
+### Шаблон лексики сканера:
+<START>
+<CONST> [возможные написания: "const" / "constexpr"]
+<SPACE_AFTER_CONST> [" "]
+<INT> ["int"]
+<SPACE_AFTER_INT> [" "]
+<ID> ["[letter][letters/digits]"]
+<SPACE_AFTER_ID> [" "]
+<EQUALS> ["="]
+<SPACE_AFTER_EQUALS> [" "]
+<NUMBER> ["[digits]"]
+<END_OF_LINE> [";"]
+<ERROR> []
+
+### Инструкция по использованию:
+1. Введите инициализацию константы в одну из строк по указанному выше формату.
+2. Нажмите "пуск" или иконку с кодом.
+3. Как только анализ будет выполнен появиться возможность посмотреть на обработанные токены и ошибки.
+4. При нажатии на отвечающую за позицию ячейку токена/ошибки каретка будет перенесена на начало кода
+<img width="2039" height="1227" alt="image" src="https://github.com/user-attachments/assets/6b23b0e8-a0e1-4318-8f68-01734732be37" />
+Предложение по корректировке:
+<img width="430" height="91" alt="image" src="https://github.com/user-attachments/assets/d7b65dcb-b87e-4f85-b0bc-3f25bf3b2f29" />
+
 
 ---
 
