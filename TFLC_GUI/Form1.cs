@@ -1076,6 +1076,7 @@ namespace TFLC_GUI
 
                 dataGridView4.Rows.Clear();
                 dataGridView1.Rows.Clear();
+                dataGridView2.Rows.Clear();
                 ScannerFSM scanner = new ScannerFSM();
                 var result = scanner.Analyze(currentTabInfo.TextBox.Text);
 

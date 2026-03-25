@@ -56,7 +56,7 @@ namespace TFLC_GUI
             LexemState currentLexem = LexemState.Start;
             int initial_line = 0;
 
-            if (input.Errors.Count > 0)
+            if (input.Errors.Count > 0 || input.Tokens.Count == 0)
                 return result;
 
             List<Token> Tokens = input.Tokens;
@@ -143,7 +143,10 @@ namespace TFLC_GUI
                 else if (currentLexem == LexemState.InNumber)
                 {
                     if (Tokens[i].Code == TokenType.Endline)
+                    {
                         currentLexem = LexemState.EndLine;
+                        continue;
+                    }
                     else
                     {
                         result.Errors.Add(new ParcerError(Tokens[i].StartPos, Tokens[i].Line, "Unexpected lexeme", "Lexeme: number. Met: '" + Tokens[i].Value + "', expected: ';'"));
@@ -156,15 +159,14 @@ namespace TFLC_GUI
                         result.Errors.Add(new ParcerError(Tokens[i].StartPos, Tokens[i].Line, "Multi-line expression", "Lexeme: end. Expression started on line: " + initial_line + ", current line: " + Tokens[i].Line));
                     }
                     currentLexem = LexemState.Start;
-                    continue;
                 }
                 i++;
             }
 
-            if (currentLexem != LexemState.EndLine)
+            if (currentLexem != LexemState.Start)
             {
                 i--;
-                result.Errors.Add(new ParcerError(Tokens[i].EndPos, Tokens[i].Line, "Missing lexeme(-s)", "Line did not end with correct lexeme. Current lexeme: '" + currentLexem + "', expected: ';' ('EndLine')"));
+                result.Errors.Add(new ParcerError(Tokens[i].EndPos, Tokens[i].Line, "Missing lexeme(-s)", "Line did not end with correct lexeme. Current lexeme: '" + currentLexem + "', expected: ('Start')"));
             }
 
 
