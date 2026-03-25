@@ -556,6 +556,7 @@
             this.statuslabel.Size = new System.Drawing.Size(173, 25);
             this.statuslabel.TabIndex = 3;
             this.statuslabel.Text = "Статус: активно";
+            this.statuslabel.Click += new System.EventHandler(this.statuslabel_Click);
             // 
             // tabControlErrors
             // 
@@ -663,6 +664,7 @@
             this.dataGridView2.RowHeadersWidth = 82;
             this.dataGridView2.Size = new System.Drawing.Size(2241, 329);
             this.dataGridView2.TabIndex = 2;
+            this.dataGridView2.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView2_CellContentClick);
             // 
             // ColumnFile2
             // 

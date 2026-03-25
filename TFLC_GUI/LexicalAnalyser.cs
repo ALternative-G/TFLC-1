@@ -9,19 +9,16 @@ namespace LexicalAnalyser
 {
 
     // Состояния конечного автомата
+    
     public enum State
     {
         Start,
-        InConst,
-        SpaceAfterConst,
-        InInt,
-        SpaceAfterInt,
-        InID,
-        SpaceAfterID,
-        Equals,
-        SpaceAfterEquals,
-        InNumber,
-        EndLine,
+        LetterDigit,
+        Digit,
+        Space,
+        Equal,
+        Negative,
+        End,
         Error
     }
 
@@ -29,15 +26,13 @@ namespace LexicalAnalyser
     {
         Startline = 0,
         Keyword_const = 1,
-        Space_after_const = 2,
+        Space = 2,
         Keyword_int = 3,
-        Space_after_int = 4,
-        Identifier = 5,
-        Space_after_id = 6,
-        Operator_eq = 7,
-        Space_after_op_eq = 8,
-        Number = 9,
-        Endline = 10,
+        Identifier = 4,
+        Operator_eq = 5,
+        Operator_neg = 6,
+        Number = 7,
+        Endline = 8,
         Unknown = 99 // Неизвестные/ошибочные символы
     }
 
@@ -100,6 +95,7 @@ namespace LexicalAnalyser
         private HashSet<char> digits;
         private char whitespace = ' ';
         private char operator_equals = '=';
+        private char operator_negative = '-';
         private char operator_separator = ';';
 
         private string keyword_const = "const";
@@ -153,8 +149,9 @@ namespace LexicalAnalyser
             currentState = State.Start;
             int posBeg = 0;
             string subline = "";
+            int i = 0;
 
-            for (int i = 0; i < line.Length; i++)
+            while (i < line.Length)
             {
                 char c = line[i];
                 if (currentState == State.Error)
@@ -165,205 +162,125 @@ namespace LexicalAnalyser
                 {
                     if (letters.Contains(c))
                     {
-                        currentState = State.InConst;
+                        currentState = State.LetterDigit;
+                    }
+                    else if (digits.Contains(c))
+                    {
+                        currentState = State.Digit;
+                    }
+                    else if(c == ' ')
+                    {
+                        currentState = State.Space;
+                    }
+                    else if (c == '=')
+                    {
+                        currentState = State.Equal;
+                    }
+                    else if (c == '-')
+                    {
+                        currentState = State.Negative;
+                    }
+                    else if (c == ';')
+                    {
+                        currentState = State.End;
                     }
                     else
                     {
                         currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: start. Met: '" + c + "', expected: letter"));
+                        result.Errors.Add(new LexicalError(i, lineIndex, "Forbidden character", "Lexeme: start. Met: '" + c + "', expected: letter, digit, ' ', '=', '-', ';'"));
                     }
                 }
-                if (currentState == State.InConst)
+                if (currentState == State.LetterDigit)
                 {
-                    if (letters.Contains(c))
+                    while ((letters.Contains(c) || digits.Contains(c)))
                     {
                         subline += c;
+                        i++;
+                        if (i >= line.Length) break;
+                        c = line[i];
                     }
-                    else if (c == whitespace)
+                    if (subline == "const" || subline == "constexpr")
                     {
-                        if (subline == "const" || subline == "constexpr")
-                        {
-                            result.Tokens.Add(new Token(TokenType.Keyword_const, "const", subline, lineIndex, posBeg, i - 1));
-                            subline = "";
-                            posBeg = i;
-                            currentState = State.SpaceAfterConst;
-                        }
-                    }
-                    else
-                    {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: const. Met: '" + subline + c + "', expected: 'const ' or 'constexpr '"));
-                    }
-
-                }
-                if (currentState == State.SpaceAfterConst)
-                {
-                    if (c == ' ')
-                    {
-                        result.Tokens.Add(new Token(TokenType.Space_after_const, "Space", " ", lineIndex, posBeg, i));
+                        result.Tokens.Add(new Token(TokenType.Keyword_const, "Const", subline, lineIndex, posBeg, i - 1));
                         subline = "";
-                        posBeg = i + 1;
-                        currentState = State.InInt;
-                        continue;
+                        posBeg = i;
+                        currentState = State.Start;
                     }
-                    else
+                    else if (subline == "int")
                     {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: space. Met: '" + c + "', expected: ' '"));
-                    }
-                }
-                if (currentState == State.InInt)
-                {
-                    if (letters.Contains(c))
-                    {
-                        subline += c;
-                    }
-                    else if (c == whitespace)
-                    {
-                        if (subline == "int")
-                        {
-                            result.Tokens.Add(new Token(TokenType.Keyword_int, "int", subline, lineIndex, posBeg, i - 1));
-                            subline = "";
-                            posBeg = i;
-                            currentState = State.SpaceAfterInt;
-                        }
-                    }
-                    else
-                    {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: int. Met: '" + subline + c + "', expected: 'int '"));
-                    }
-
-                }
-                if (currentState == State.SpaceAfterInt)
-                {
-                    if (c == ' ')
-                    {
-                        result.Tokens.Add(new Token(TokenType.Space_after_int, "Space", " ", lineIndex, posBeg, i));
+                        result.Tokens.Add(new Token(TokenType.Keyword_int, "Int", subline, lineIndex, posBeg, i - 1));
                         subline = "";
-                        posBeg = i + 1;
-                        currentState = State.InID;
-                        continue;
-                    }
-                    else
-                    {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: space. Met: '" + c + "', expected: ' '"));
-                    }
-                }
-                if (currentState == State.InID)
-                {
-                    if (subline == "" && digits.Contains(c))
-                    {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: identifier. Met: '" + c + "', expected: letter"));
-                    }
-                    else if (letters.Contains(c) || digits.Contains(c))
-                    {
-                        subline += c;
-                    }
-                    else
-                    {
-                        if (c == whitespace)
-                        {
-                            result.Tokens.Add(new Token(TokenType.Identifier, "identifier", subline, lineIndex, posBeg, i - 1));
-                            subline = "";
-                            posBeg = i;
-                            currentState = State.SpaceAfterID;
-                        }
-                        else
-                        {
-                            currentState = State.Error;
-                            result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: identifier. Met: '" + subline + c + "', expected: '[letters or digits] '"));
-                        }
-                    }
-                }
-                if (currentState == State.SpaceAfterID)
-                {
-                    if (c == ' ')
-                    {
-                        result.Tokens.Add(new Token(TokenType.Space_after_id, "Space", " ", lineIndex, posBeg, i));
-                        subline = "";
-                        posBeg = i + 1;
-                        currentState = State.Equals;
-                        continue;
-                    }
-                    else
-                    {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: space. Met: '" + c + "', expected: ' '"));
-                    }
-                }
-                if (currentState == State.Equals)
-                {
-                    if (c == operator_equals)
-                    {
-                        result.Tokens.Add(new Token(TokenType.Operator_eq, "Equals", "=", lineIndex, posBeg, i));
-                        subline = "";
-                        posBeg = i + 1;
-                        currentState = State.SpaceAfterEquals;
-                        continue;
-                    }
-                    else
-                    {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: equals. Met: '" + c + "', expected: '='"));
-                    }
-                }
-                if (currentState == State.SpaceAfterEquals)
-                {
-                    if (c == ' ')
-                    {
-                        result.Tokens.Add(new Token(TokenType.Space_after_op_eq, "Space", " ", lineIndex, posBeg, i));
-                        subline = "";
-                        posBeg = i + 1;
-                        currentState = State.InNumber;
-                        continue;
-                    }
-                    else
-                    {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: space. Met: '" + c + "', expected: ' '"));
-                    }
-                }
-                if (currentState == State.InNumber)
-                {
-                    if (digits.Contains(c))
-                    {
-                        subline += c;
-                    }
-                    else
-                    {
-                        if (c == operator_separator)
-                        {
-                            result.Tokens.Add(new Token(TokenType.Number, "number", subline, lineIndex, posBeg, i - 1));
-                            subline = "";
-                            posBeg = i;
-                            currentState = State.EndLine;
-                        }
-                        else
-                        {
-                            currentState = State.Error;
-                            result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: number. Met: '" + subline + c + "', expected: '[digits];'"));
-                        }
-                    }
-                }
-                if (currentState == State.EndLine)
-                {
-                    if (c == operator_separator)
-                    {
-                        result.Tokens.Add(new Token(TokenType.Endline, "Separator", ";", lineIndex, posBeg, i));
-                        subline = "";
-                        posBeg = i + 1;
+                        posBeg = i;
                         currentState = State.Start;
                     }
                     else
                     {
-                        currentState = State.Error;
-                        result.Errors.Add(new LexicalError(i, lineIndex, "Unexpected character", "Lexeme: separator. Met: '" + c + "', expected: ';'"));
+                        result.Tokens.Add(new Token(TokenType.Identifier, "Identifier", subline, lineIndex, posBeg, i - 1));
+                        subline = "";
+                        posBeg = i;
+                        currentState = State.Start;
                     }
+                    continue;
+                }
+
+                if (currentState == State.Digit)
+                {
+                    while (digits.Contains(c))
+                    {
+                        subline += c;
+                        i++;
+                        if (i >= line.Length) break;
+                        c = line[i];
+                    }
+                    result.Tokens.Add(new Token(TokenType.Number, "Number", subline, lineIndex, posBeg, i - 1));
+                    subline = "";
+                    posBeg = i;
+                    currentState = State.Start;
+                    continue;
+                }
+
+                if (currentState == State.Space)
+                {
+                    result.Tokens.Add(new Token(TokenType.Space, "Space", " ", lineIndex, posBeg, i));
+                    subline = "";
+                    i++;
+                    posBeg = i;
+                    currentState = State.Start;
+                    continue;
+                }
+
+                if (currentState == State.Equal)
+                {
+                    result.Tokens.Add(new Token(TokenType.Operator_eq, "Equals", "=", lineIndex, posBeg, i));
+                    subline = "";
+                    i++;
+                    posBeg = i;
+                    currentState = State.Start;
+                    continue;
+                }
+
+                if (currentState == State.Negative)
+                {
+                    result.Tokens.Add(new Token(TokenType.Operator_neg, "Negative", "-", lineIndex, posBeg, i));
+                    subline = "";
+                    i++;
+                    posBeg = i;
+                    currentState = State.Start;
+                    continue;
+                }
+
+                if (currentState == State.End)
+                {
+                    result.Tokens.Add(new Token(TokenType.Endline, "Separator", ";", lineIndex, posBeg, i));
+                    subline = "";
+                    i++;
+                    posBeg = i;
+                    currentState = State.Start;
+                    continue;
                 }
             }
+                
+
         }
 
     }

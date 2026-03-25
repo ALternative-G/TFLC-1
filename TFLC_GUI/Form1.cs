@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using LexicalAnalyser;
 using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using static TFLC_GUI.Parcer;
 
 namespace TFLC_GUI
 {
@@ -1102,6 +1103,22 @@ namespace TFLC_GUI
 
                     dataGridView1.Rows.Add(row);
                 }
+
+
+                Parcer parcer = new Parcer();
+                var result_2 = parcer.Parce(result);
+                List<ParcerError> ParcerErrors = result_2.Errors;
+                foreach (var item in ParcerErrors)
+                {
+                    string[] row = { filepath };
+
+                    foreach (var elem in item.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
+                        row = row.Append(elem).ToArray();
+
+
+                    dataGridView2.Rows.Add(row);
+                }
+                statuslabel.Text = "Parcer >> Errors detected: " + ParcerErrors.Count();
             }
 
         }
@@ -1183,6 +1200,34 @@ namespace TFLC_GUI
                 cellEvent.RowIndex != -1)
             { return true; }
             else { return false; }
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!IsANonHeaderLinkCell(e))
+            {
+                DataGridViewSelectedCellCollection selected = dataGridView2.SelectedCells;
+
+                if (selected[0].ColumnIndex == 1)
+                {
+                    string input = selected[0].EditedFormattedValue.ToString();
+                    string pattern = @"Line (?<ln>\d+), pos (?<pos1>\d+)";
+
+                    Match match = Regex.Match(input, pattern);
+
+                    if (match.Success)
+                    {
+                        string line = match.Groups["ln"].Value;
+                        string pos1 = match.Groups["pos1"].Value;
+                        SetCaretPositionRobust(int.Parse(line), int.Parse(pos1));
+                    }
+                }
+            }
+        }
+
+        private void statuslabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
