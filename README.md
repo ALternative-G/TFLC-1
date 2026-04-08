@@ -156,7 +156,7 @@
 ---
 ## Синтаксический анализатор (парсер)
 ### Схема конечногго автомата:
-<img width="841" height="105" alt="Парсер" src="https://github.com/user-attachments/assets/b1ddf2d3-358a-4874-a1f3-d1788eb74d1e" />
+<img width="841" height="105" alt="Парсер" src="https://github.com/user-attachments/assets/9c24ed3c-3b20-47bf-841c-081ae5f91c9f" />
 
 
 ### Грамматика:
@@ -171,8 +171,8 @@ P = {
 2) InConst -> " "SpaceAfterConst
 3) SpaceAfterConst -> "int"InInt
 4) InInt -> " "SpaceAfterInt
-5) SpaceAfterInt -> literInID
-6) InID -> "="Equals|literInID|digitInID
+5) SpaceAfterInt -> letterInID
+6) InID -> "="Equals|letterInID|digitInID
 7) Equals -> "-"Negative|digitInNumber
 8) Negative -> digitInNumber
 9) InNumber -> ";"EndLine
