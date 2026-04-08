@@ -162,20 +162,20 @@
 ### Грамматика:
 Класификация грамматики: контексно-свободная грамматика
 
-G[<Start>] = {Vt, Vn, P, Z}
+G[Start] = {Vt, Vn, P, Z}
 
 Vt = {a, b, c... x, y, z, A, B, C... X, Y, Z, _, 0, 1, 2... 8, 9}
-Vn = {<Start>, <InConst>, <SpaceAfterConst>, <InInt>, <SpaceAfterInt>, <InID>, <Equals>, <Negative>, <InNumber>, <EndLine>}
+Vn = {Start, InConst, SpaceAfterConst, InInt, SpaceAfterInt, InID, Equals, Negative, InNumber, EndLine}
 P = {
-1) <Start> -> "const"<InConst>
-2) <InConst> -> " "<SpaceAfterConst>
-3) <SpaceAfterConst> -> "int"<InInt>
-4) <InInt> -> " "<SpaceAfterInt>
-5) <SpaceAfterInt> -> liter<InID>
-6) <InID> -> "="<Equals>|liter<InID>|digit<InID>
-7) <Equals> -> "-"<Negative>|digit<InNumber>
-8) <Negative> -> digit<InNumber>
-9) <InNumber> -> ";"<EndLine>
+1) Start -> "const"InConst
+2) InConst -> " "SpaceAfterConst
+3) SpaceAfterConst -> "int"InInt
+4) InInt -> " "SpaceAfterInt
+5) SpaceAfterInt -> literInID
+6) InID -> "="Equals|literInID|digitInID
+7) Equals -> "-"Negative|digitInNumber
+8) Negative -> digitInNumber
+9) InNumber -> ";"EndLine
 
 ### Инструкция по использованию:
 1. Введите инициализацию константы в одну из строк по указанному выше формату.
