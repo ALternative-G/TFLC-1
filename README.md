@@ -132,17 +132,17 @@
 <img width="531" height="533" alt="Сканер" src="https://github.com/user-attachments/assets/e53720bf-8fa4-4365-85f8-b8a7660ad2e9" />
 
 ### Шаблон лексики сканера:
-<START>
-<CONST> [возможные написания: "const" / "constexpr"]
-<SPACE_AFTER_CONST> [" "]
-<INT> ["int"]
-<SPACE_AFTER_INT> [" "]
-<ID> ["[letter][letters/digits]"]
-<EQUALS> ["="]
-<NEGATIVE> ["-"]
-<NUMBER> ["[digits]"]
-<END_OF_LINE> [";"]
-<ERROR> []
+START
+CONST [возможные написания: "const" / "constexpr"]
+SPACE_AFTER_CONST [" "]
+INT ["int"]
+SPACE_AFTER_INT [" "]
+ID ["[letter][letters/digits]"]
+EQUALS ["="]
+NEGATIVE ["-"]
+NUMBER ["[digits]"]
+END_OF_LINE [";"]
+ERROR []
 
 ### Инструкция по использованию:
 1. Введите инициализацию константы в одну из строк по указанному выше формату.
@@ -154,13 +154,19 @@
 <img width="430" height="91" alt="image" src="https://github.com/user-attachments/assets/d7b65dcb-b87e-4f85-b0bc-3f25bf3b2f29" />
 
 ---
-## Синтаксический анализатор (парсер)
-### Схема конечногго автомата:
-<img width="841" height="105" alt="Парсер" src="https://github.com/user-attachments/assets/9c24ed3c-3b20-47bf-841c-081ae5f91c9f" />
+## Лабораторная работа 3. Разработка синтаксического анализатора (парсера)
 
+### Цель работы
+Изучить назначение и принципы работы синтаксического анализатора в структуре компилятора. Спроектировать грамматику, построить соответствующую схему метода анализа грамматики и выполнить программную реализацию парсера с нейтрализацией синтаксических ошибок методом Айронса. Интегрировать разработанный модуль в ранее созданный графический интерфейс языкового процессора.
+
+### Вариант задания
+Объявление целочисленной константы с инициализацией на языке C/C++
+Корректные вводные строки:
+"const int x=9;"
+"constexpr int ab12c=-987;"
 
 ### Грамматика:
-Класификация грамматики: контексно-свободная грамматика
+Класификация грамматики: автоматная грамматика
 
 G[Start] = {Vt, Vn, P, Z}
 
@@ -177,6 +183,10 @@ P = {
 8) Negative -> digitInNumber
 9) InNumber -> ";"EndLine
 
+
+### Метод анализа - граф автоматной грамматики.
+<img width="841" height="105" alt="Парсер" src="https://github.com/user-attachments/assets/525c0dfe-0f4b-457f-a343-9125d6a756bc" />
+
 ### Инструкция по использованию:
 1. Введите инициализацию константы в одну из строк по указанному выше формату.
 2. Нажмите "пуск" или иконку с кодом.
@@ -185,7 +195,20 @@ P = {
 4. Если ошибки есть, переключитесь на вкладку "парсер" чтобы их увидеть.
 5. При нажатии на отвечающую за позицию ошибки ячейку таблицы каретка будет перенесена на начало фрагмента кода.
 
-### Примеры:
+### Диагностика и нейтрализация ошибок
+Осуществляется по показанному в алгоритме Айронса принципу.
+Программа способна пропускать, дополнять и заменять проблемные участки кода и сообщать о рекомендациях пользователю.
+
+### Тестовые примеры gримеры:
+<img width="1932" height="1121" alt="image" src="https://github.com/user-attachments/assets/a43bb746-8bc1-43eb-b07a-48c495b8701a" />
+
+<img width="1924" height="1114" alt="image" src="https://github.com/user-attachments/assets/9a20cb7d-bf37-4082-a753-73902cacf6a4" />
+
+<img width="1929" height="1114" alt="image" src="https://github.com/user-attachments/assets/1a6db241-5261-486c-8586-c8f34dca0773" />
+
+<img width="1925" height="1114" alt="image" src="https://github.com/user-attachments/assets/251b0d45-09b6-4d37-a3a5-c9a6f10c1361" />
+
+
 <img width="1926" height="1120" alt="image" src="https://github.com/user-attachments/assets/891a199b-ac00-4926-8595-cef75b10e2e4" />
 
 <img width="1927" height="1119" alt="image" src="https://github.com/user-attachments/assets/07b32f4d-478a-413d-b6a7-b137d9e9f682" />
