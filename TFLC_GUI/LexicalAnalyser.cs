@@ -156,7 +156,13 @@ namespace LexicalAnalyser
                 char c = line[i];
                 if (currentState == State.Error)
                 {
-                    break;
+                    result.Tokens.Add(new Token(TokenType.Unknown, "ERROR", subline, lineIndex, posBeg, i));
+                    subline = "";
+                    i++;
+                    posBeg = i;
+                    currentState = State.Start;
+                    continue;
+                    //break;
                 }
                 if (currentState == State.Start)
                 {
@@ -187,7 +193,9 @@ namespace LexicalAnalyser
                     else
                     {
                         currentState = State.Error;
+                        subline += c;
                         result.Errors.Add(new LexicalError(i, lineIndex, "Forbidden character", "Lexeme: start. Met: '" + c + "', expected: letter, digit, ' ', '=', '-', ';'"));
+                        
                     }
                 }
                 if (currentState == State.LetterDigit)

@@ -1073,10 +1073,34 @@ namespace TFLC_GUI
             {
                 HighlightSyntax(currentTabInfo.TextBox);
 
-
                 dataGridView4.Rows.Clear();
                 dataGridView1.Rows.Clear();
                 dataGridView2.Rows.Clear();
+                dataGridView3.Rows.Clear();
+
+                string filepath = currentTabInfo.FilePath;
+                if (filepath == "")
+                    filepath = "unnamed";
+
+                RegularAnalyze regScanner = new RegularAnalyze();
+                var regResult1 = regScanner.Analyze(currentTabInfo.TextBox.Text, @"\d*[123467890]");
+                var regResult2 = regScanner.Analyze(currentTabInfo.TextBox.Text, @"(//.*)|([/][*](.*(\n)*.*)*[*][/])");
+                var regResult3 = regScanner.Analyze(currentTabInfo.TextBox.Text, @"RGB\((([1-2]5[0-5])|([1-2][0-4]\d)|([1-9]\d)|(\d))(\s(([1-2]5[0-5])|([1-2][0-4]\d)|([1-9]\d)|(\d))){2}\)");
+                regResult1.Matches.AddRange(regResult2.Matches);
+                regResult1.Matches.AddRange(regResult3.Matches);
+
+                foreach (var item in regResult1.Matches)
+                {
+                    string[] row = { filepath };
+
+                    foreach (var elem in item.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
+                        row = row.Append(elem).ToArray();
+
+
+                    dataGridView3.Rows.Add(row);
+                }
+
+
                 ScannerFSM scanner = new ScannerFSM();
                 var result = scanner.Analyze(currentTabInfo.TextBox.Text);
 
@@ -1089,9 +1113,6 @@ namespace TFLC_GUI
 
 
                 List<LexicalError> LexErrors = result.Errors;
-                string filepath = currentTabInfo.FilePath;
-                if (filepath == "")
-                    filepath = "unnamed";
 
 
                 foreach (var item in LexErrors)
@@ -1105,21 +1126,28 @@ namespace TFLC_GUI
                     dataGridView1.Rows.Add(row);
                 }
 
-
-                Parcer parcer = new Parcer();
-                var result_2 = parcer.Parce(result);
-                List<ParcerError> ParcerErrors = result_2.Errors;
-                foreach (var item in ParcerErrors)
+                //if (LexErrors.Count == 0)
                 {
-                    string[] row = { filepath };
+                    Parcer parcer = new Parcer();
+                    var result_2 = parcer.Parce(result);
+                    List<ParcerError> ParcerErrors = result_2.Errors;
+                    foreach (var item in ParcerErrors)
+                    {
+                        string[] row = { filepath };
 
-                    foreach (var elem in item.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
-                        row = row.Append(elem).ToArray();
+                        foreach (var elem in item.ToString().Split(new[] { "\r\n", "\r", "\n" }, StringSplitOptions.None))
+                            row = row.Append(elem).ToArray();
 
 
-                    dataGridView2.Rows.Add(row);
+                        dataGridView2.Rows.Add(row);
+                    }
+                    statuslabel.Text = "Parcer >> Errors detected: " + ParcerErrors.Count();
+
                 }
-                statuslabel.Text = "Parcer >> Errors detected: " + ParcerErrors.Count();
+                if (currentTabInfo.TextBox.Text == "")
+                {
+                    statuslabel.Text = "Awaiting text input";
+                }
             }
 
         }
@@ -1226,9 +1254,33 @@ namespace TFLC_GUI
             }
         }
 
+        private void dataGridView3_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (!IsANonHeaderLinkCell(e))
+            {
+                DataGridViewSelectedCellCollection selected = dataGridView3.SelectedCells;
+
+                if (selected[0].ColumnIndex == 1)
+                {
+                    string input = selected[0].EditedFormattedValue.ToString();
+                    string pattern = @"Line (?<ln>\d+), pos (?<pos1>\d+)";
+
+                    Match match = Regex.Match(input, pattern);
+
+                    if (match.Success)
+                    {
+                        string line = match.Groups["ln"].Value;
+                        string pos1 = match.Groups["pos1"].Value;
+                        SetCaretPositionRobust(int.Parse(line), int.Parse(pos1));
+                    }
+                }
+            }
+        }
+
         private void statuslabel_Click(object sender, EventArgs e)
         {
 
         }
+
     }
 }

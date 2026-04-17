@@ -87,14 +87,14 @@
             this.ColumnError2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPageOptimisation = new System.Windows.Forms.TabPage();
             this.dataGridView3 = new System.Windows.Forms.DataGridView();
-            this.ColumnFile3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnPos3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCode3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnError3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.richTextBox1 = new System.Windows.Forms.RichTextBox();
             this.richTextBox_scroll1 = new System.Windows.Forms.RichTextBox();
             this.tabControlFile = new System.Windows.Forms.TabControl();
+            this.ColumnFile3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnPos3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCode3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnError3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.menuStrip2.SuspendLayout();
@@ -560,6 +560,7 @@
             // 
             // tabControlErrors
             // 
+            this.tabControlErrors.AllowDrop = true;
             this.tabControlErrors.Controls.Add(this.tabPageScanner);
             this.tabControlErrors.Controls.Add(this.tabPageParcer);
             this.tabControlErrors.Controls.Add(this.tabPageOptimisation);
@@ -706,7 +707,7 @@
             this.tabPageOptimisation.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageOptimisation.Size = new System.Drawing.Size(2247, 335);
             this.tabPageOptimisation.TabIndex = 2;
-            this.tabPageOptimisation.Text = "Оптимизация";
+            this.tabPageOptimisation.Text = "Рег выражения";
             this.tabPageOptimisation.UseVisualStyleBackColor = true;
             // 
             // dataGridView3
@@ -727,38 +728,7 @@
             this.dataGridView3.RowHeadersWidth = 82;
             this.dataGridView3.Size = new System.Drawing.Size(2241, 329);
             this.dataGridView3.TabIndex = 2;
-            // 
-            // ColumnFile3
-            // 
-            this.ColumnFile3.HeaderText = "Файл";
-            this.ColumnFile3.MinimumWidth = 10;
-            this.ColumnFile3.Name = "ColumnFile3";
-            this.ColumnFile3.ReadOnly = true;
-            this.ColumnFile3.Width = 200;
-            // 
-            // ColumnPos3
-            // 
-            this.ColumnPos3.HeaderText = "Позиция";
-            this.ColumnPos3.MinimumWidth = 10;
-            this.ColumnPos3.Name = "ColumnPos3";
-            this.ColumnPos3.ReadOnly = true;
-            this.ColumnPos3.Width = 200;
-            // 
-            // ColumnCode3
-            // 
-            this.ColumnCode3.HeaderText = "Код";
-            this.ColumnCode3.MinimumWidth = 10;
-            this.ColumnCode3.Name = "ColumnCode3";
-            this.ColumnCode3.ReadOnly = true;
-            this.ColumnCode3.Width = 200;
-            // 
-            // ColumnError3
-            // 
-            this.ColumnError3.HeaderText = "Ошибка";
-            this.ColumnError3.MinimumWidth = 10;
-            this.ColumnError3.Name = "ColumnError3";
-            this.ColumnError3.ReadOnly = true;
-            this.ColumnError3.Width = 700;
+            this.dataGridView3.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView3_CellContentClick);
             // 
             // tabPage1
             // 
@@ -805,6 +775,38 @@
             this.tabControlFile.SelectedIndex = 0;
             this.tabControlFile.Size = new System.Drawing.Size(2263, 494);
             this.tabControlFile.TabIndex = 5;
+            // 
+            // ColumnFile3
+            // 
+            this.ColumnFile3.HeaderText = "Файл";
+            this.ColumnFile3.MinimumWidth = 10;
+            this.ColumnFile3.Name = "ColumnFile3";
+            this.ColumnFile3.ReadOnly = true;
+            this.ColumnFile3.Width = 200;
+            // 
+            // ColumnPos3
+            // 
+            this.ColumnPos3.HeaderText = "Позиция";
+            this.ColumnPos3.MinimumWidth = 10;
+            this.ColumnPos3.Name = "ColumnPos3";
+            this.ColumnPos3.ReadOnly = true;
+            this.ColumnPos3.Width = 200;
+            // 
+            // ColumnCode3
+            // 
+            this.ColumnCode3.HeaderText = "Строка";
+            this.ColumnCode3.MinimumWidth = 10;
+            this.ColumnCode3.Name = "ColumnCode3";
+            this.ColumnCode3.ReadOnly = true;
+            this.ColumnCode3.Width = 200;
+            // 
+            // ColumnError3
+            // 
+            this.ColumnError3.HeaderText = "Паттерн";
+            this.ColumnError3.MinimumWidth = 10;
+            this.ColumnError3.Name = "ColumnError3";
+            this.ColumnError3.ReadOnly = true;
+            this.ColumnError3.Width = 700;
             // 
             // Form1
             // 
@@ -911,14 +913,14 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPos2;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCode2;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnError2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFile3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPos3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCode3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnError3;
         private System.Windows.Forms.DataGridView dataGridView4;
         private System.Windows.Forms.DataGridViewTextBoxColumn LexCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn LexType;
         private System.Windows.Forms.DataGridViewTextBoxColumn LexString;
         private System.Windows.Forms.DataGridViewTextBoxColumn LexPos;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFile3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnPos3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCode3;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ColumnError3;
     }
 }

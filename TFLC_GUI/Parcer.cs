@@ -63,6 +63,12 @@ namespace TFLC_GUI
             {
                 resultErrors.Errors.Add(errors);
             }
+            if (resultErrors.Errors.Count > 10)
+            {
+                result.ResultsList.Add(resultErrors);
+                return result;
+            }
+
 
 
             if (Tokens.Count == 0)
@@ -283,10 +289,24 @@ namespace TFLC_GUI
             LexemState currentLexem = LexemState.Start;
             int initial_line = 0;
 
-            if (input.Errors.Count > 0 || input.Tokens.Count == 0)
+            //if (input.Errors.Count > 0 || input.Tokens.Count == 0)
+            if (input.Tokens.Count == 0)
                 return result;
 
             List<Token> Tokens = input.Tokens;
+            bool StartExists = false;
+            foreach(var el in Tokens)
+            {
+                if (el.Code == TokenType.Keyword_const){
+                    StartExists = true;
+                    break;
+                }
+            }
+            if (!StartExists)
+            {
+                result.Errors.Add(new ParcerError(Tokens[0].StartPos, Tokens[0].Line, "No start", "No starting lexeme detected. Met: '" + Tokens[0].Value + "', expected: 'const'"));
+                return result;
+            }
             
             var Allresults = new ParcerResultList();
             Allresults = ParcerRecursion(Tokens, currentLexem, result, initial_line);

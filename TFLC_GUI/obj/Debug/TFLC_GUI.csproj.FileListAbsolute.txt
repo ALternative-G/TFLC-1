@@ -9,3 +9,14 @@ C:\Users\user\source\repos\TFLC_GUI\obj\Debug\TFLC_GUI.csproj.GenerateResource.c
 C:\Users\user\source\repos\TFLC_GUI\obj\Debug\TFLC_GUI.csproj.CoreCompileInputs.cache
 C:\Users\user\source\repos\TFLC_GUI\obj\Debug\TFLC_GUI.exe
 C:\Users\user\source\repos\TFLC_GUI\obj\Debug\TFLC_GUI.pdb
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\bin\Debug\Resources\Create.png
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\bin\Debug\TFLC_GUI.exe.config
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\bin\Debug\TFLC_GUI.exe
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\bin\Debug\TFLC_GUI.pdb
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\obj\Debug\TFLC_GUI.csprojAssemblyReference.cache
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\obj\Debug\TFLC_GUI.Form1.resources
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\obj\Debug\TFLC_GUI.Properties.Resources.resources
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\obj\Debug\TFLC_GUI.csproj.GenerateResource.cache
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\obj\Debug\TFLC_GUI.csproj.CoreCompileInputs.cache
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\obj\Debug\TFLC_GUI.exe
+C:\Users\User.DESKTOP-Q2FT676\Desktop\TFLC-1-main\TFLC_GUI\obj\Debug\TFLC_GUI.pdb
